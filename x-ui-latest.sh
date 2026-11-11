@@ -306,6 +306,7 @@ server {
 EOF
 
     grep -q "stream {" /etc/nginx/nginx.conf || echo "stream { map_hash_bucket_size 128; include /etc/nginx/stream-enabled/*.conf; }" >> /etc/nginx/nginx.conf
+	sed -i '/types_hash_max_size 2048;/a \    map_hash_bucket_size 128;' /etc/nginx/nginx.conf	#чтобы nginx не ругался, что директивы map_hash_bucket_size нет в контексте http
     grep -xqFR "load_module modules/ngx_stream_module.so;" /etc/nginx/* \
         || sed -i '1s/^/load_module \/usr\/lib\/nginx\/modules\/ngx_stream_module.so; /' /etc/nginx/nginx.conf
     grep -xqFR "worker_rlimit_nofile 16384;" /etc/nginx/* \
