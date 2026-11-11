@@ -31,7 +31,7 @@ Automated installer for the [3x-ui](https://github.com/MHSanaei/3x-ui) panel wit
 **Step 1 — download the script**
 
 ```bash
-wget -qO x-ui-latest.sh https://raw.githubusercontent.com/mozaroc/3x-ui-pro/main/x-ui-latest.sh
+wget -qO x-ui-latest.sh https://raw.githubusercontent.com/mitchconner/3x-ui-pro/main/x-ui-latest.sh
 ```
 
 **Step 2 — run it**
