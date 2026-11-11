@@ -39,10 +39,8 @@ check_cpu() {
     if echo "$cpu_model" | grep -qi 'QEMU'; then
         msg_err "QEMU virtual CPU detected!"
         echo -e "\nYour VPS is running with an emulated QEMU processor."
-        echo -e "Please contact your hosting provider and ask them to switch the CPU type"
-        echo -e "to \e[1;33mhost-passthrough\e[0m (expose real CPU model to the VM)."
-        echo -e "\nThis is required for correct operation of the Xray core."
-        exit 1
+		echo -e "Script will continue but proper result is not guaranteed!"
+		echo -e "\n"
     fi
 }
 
@@ -307,8 +305,7 @@ server {
 }
 EOF
 
-    grep -xqFR "stream { include /etc/nginx/stream-enabled/*.conf; }" /etc/nginx/* \
-        || echo "stream { include /etc/nginx/stream-enabled/*.conf; }" >> /etc/nginx/nginx.conf
+    grep -q "stream {" /etc/nginx/nginx.conf || echo "stream { map_hash_bucket_size 128; include /etc/nginx/stream-enabled/*.conf; }" >> /etc/nginx/nginx.conf
     grep -xqFR "load_module modules/ngx_stream_module.so;" /etc/nginx/* \
         || sed -i '1s/^/load_module \/usr\/lib\/nginx\/modules\/ngx_stream_module.so; /' /etc/nginx/nginx.conf
     grep -xqFR "worker_rlimit_nofile 16384;" /etc/nginx/* \
